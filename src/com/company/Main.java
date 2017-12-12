@@ -11,7 +11,7 @@ public class Main {
         //String [] cardSuits = {"♠","♥","♦","♣"};
         List<String> newDeck = initializeDeck(cardRanks);
         // printcards(newDeck);
-        List<Player> Playerlist = new ArrayList<>();
+        List<Player> Playerlist = new ArrayList<>(); //Making a list of players.
 
 
         while (gameplay == 1) {
@@ -37,19 +37,22 @@ public class Main {
                         String n = input.next();
                         List<String> Hands = new ArrayList<>();
                         // printcards(newDeck);
+                        
                         for (int j = 0; j < 3; j++) {
-                            String pl = newDeck.get(newDeck.size() - 1);
-                            newDeck.remove(newDeck.size() - 1);
-                            Hands.add(pl);
+                            String pl = newDeck.get(newDeck.size() - 1); // extracting the last card from the Deck
+                            newDeck.remove(newDeck.size() - 1); // Removing the last card from the Deck
+                            Hands.add(pl); //Assigning that card to players hands
                         }
 
                         Playerlist.add(new Player(n, initial_bet, Hands));
                         //  Playerlist.get(i).hands = Playerlist.get(i).sortedHands();
+
                     }
                     setPrioritis(Playerlist, cardRanks);
                     printPlayers(Playerlist);
                     Player winner = SelectWinner(Playerlist, cardRanks);
-                    System.out.println(winner.Name);
+                    System.out.println();
+                    System.out.println("The Winner is "+ winner.Name);
                     // printcards(newDeck); */
                     break;
                 case 2:
@@ -61,13 +64,13 @@ public class Main {
 
     }
 
-    private static List<Player> popPlayer(List<Player> listo) {
+    // private static List<Player> popPlayer(List<Player> listo) {
 
-        return listo;
+       // return listo;
 
-    }
+    //}
 
-    private static List<String> initializeDeck(List<String> cardRanks) {
+    private static List<String> initializeDeck(List<String> cardRanks) { //method to initialize a new Deck of Card
         List<String> newDeck = new ArrayList<>();
         int j = 0;
         for (int i = 1; i < 53; i++) {
@@ -81,26 +84,27 @@ public class Main {
 
     }
 
-    private static void printcards(List<String> newDeck) {
+    private static void printcards(List<String> newDeck) { //method for printing the cards
         for (String b : newDeck)
             System.out.println(b);
     }
 
-    private static void printPlayers(List<Player> newDeck) {
-        for (Player b : newDeck) {
-            System.out.println(b.Name);
+    private static void printPlayers(List<Player> Playerlist) { // methods for printing player's name and hands
+        for (Player b : Playerlist) {
+            System.out.println("The hands of the player " + b.Name+ " is");
             for (String card : b.hands)
                 System.out.println(card);
+                System.out.println();
         }
     }
 
-    private static void setPrioritis(List<Player> PlayerList, List<String> cardRanks) {
+    private static void setPrioritis(List<Player> PlayerList, List<String> cardRanks) { // running main algorithm for setting priorities
         for (Player b : PlayerList) {
 
             if (b.hands.get(0).equals(b.hands.get(1)) && b.hands.get(1).equals(b.hands.get(2))) {
                 b.priority_type = 0; //  means highest priority whose range is 0-13 if all cards are the same
 
-            } else if ((b.hands.get(0).equals(b.hands.get(1)) && !b.hands.get(1).equals(b.hands.get(2)))
+            } else if ((b.hands.get(0).equals(b.hands.get(1)) && !b.hands.get(1).equals(b.hands.get(2))) // in case two cards are same
                     || (b.hands.get(1).equals(b.hands.get(2)) && !b.hands.get(2).equals(b.hands.get(0)))
                     || (b.hands.get(0).equals(b.hands.get(2)) && !b.hands.get(2).equals(b.hands.get(1)))) {
 
@@ -112,7 +116,7 @@ public class Main {
 
             }
 
-            b.priority_num[0] = b.getIndex(cardRanks, 0);
+            b.priority_num[0] = b.getIndex(cardRanks, 0); // getting the priorities
             b.priority_num[1] = b.getIndex(cardRanks, 1);
             b.priority_num[2] = b.getIndex(cardRanks, 2);
             b.sortedHands();
@@ -137,7 +141,7 @@ public class Main {
                 int wind2 = winner.getIndex(CardRanks, 1);
                 int wind3 = winner.getIndex(CardRanks, 2);
 
-                if (b.priority_type == 2) {
+                if (b.priority_type == 2) { //finding the highest card in hand
                     int highest = 0;
                     for (int s : b.priority_num) {
                         if (s > highest)

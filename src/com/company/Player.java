@@ -22,7 +22,7 @@ public class Player {
             if (b.equals(this.hands.get(priorityindex)))
                 return cardRanks.indexOf(b) + 1;
         }
-        return -663634756;
+        return -1;
     }
 
     public void sortedHands() {
